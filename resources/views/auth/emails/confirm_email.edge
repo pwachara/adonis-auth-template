@@ -1,0 +1,9 @@
+<p>Hello {{ first_name  }} ,</p>
+
+<p>
+    Welcome to the application.  Please confirm your email address by clicking on the link below.
+</p>
+
+<p>
+    <a href="{{ appUrl('register/confirm/' + confirmation_token)  }}">Confirm email address</a>
+</p>

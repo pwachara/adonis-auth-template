@@ -1,0 +1,50 @@
+@layout('layouts.main')
+
+@section('content')
+  <div class="columns">
+      <div class="column is-4 is-offset-4">
+          <div class="title has-text-centered">Login</div>
+
+          @include('includes.notification')
+
+          <form action= {{ route('login')}} method="post">
+            {{ csrfField() }}
+
+                    <div class="field">
+
+                        <label for="email">Email</label>
+                        <div class="control">
+                                <input 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                class="input">
+                        </div>
+                        
+                    </div>
+
+                    <div class="field">
+
+                        <label for="password">Password</label>
+                        <div class="control">
+                                <input 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                class="input">
+                        </div>
+                            
+                        </div>
+                
+                <div class="control">
+                    <button type="submit" class=" button is-dark is-fullwidth is-uppercase">Login</button>
+                </div>
+        </form>
+
+        <p class="has-text-centered" style="margin-top: 10px">
+            <a href="/password/send-reset-email">Forgot Password?</a>
+        </p>
+
+      </div>
+  </div>
+@endsection

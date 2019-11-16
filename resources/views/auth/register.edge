@@ -1,0 +1,75 @@
+@layout('layouts.main')
+
+@section('content')
+  <div class="columns">
+      <div class="column is-4 is-offset-4">
+          <div class="title has-text-centered">Register</div>
+
+          @include('includes.notification')
+
+          <form action= {{ route('register')}} method="post">
+            {{ csrfField() }}
+
+            <div class="field">
+
+                <label for="first_name">First Name</label>
+                <div class="control">
+                        <input 
+                        type="text" 
+                        name="first_name" 
+                        id="first_name" 
+                        class="input {{ hasErrorFor('first_name') ? 'is-danger' : '' }}"
+                        value="{{ old('first_name', '') }}">
+                </div>
+                {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('first_name'), hasErrorFor('first_name')) }}
+            </div>
+
+            <div class="field">
+
+                    <label for="last_name">Last Name</label>
+                    <div class="control">
+                            <input 
+                            type="text" 
+                            name="last_name" 
+                            id="last_name" 
+                            class="input {{ hasErrorFor('last_name') ? 'is-danger' : '' }}"
+                            value="{{ old('last_name', '') }}">
+                    </div>
+                    {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('last_name'), hasErrorFor('last_name')) }}
+                </div>
+
+                <div class="field">
+
+                        <label for="email">Email</label>
+                        <div class="control">
+                                <input 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                class="input {{ hasErrorFor('email') ? 'is-danger' : '' }}"
+                                value="{{ old('email', '') }}">
+                        </div>
+                        {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
+                    </div>
+
+                    <div class="field">
+
+                            <label for="password">Password</label>
+                            <div class="control">
+                                    <input 
+                                    type="password" 
+                                    name="password" 
+                                    id="password" 
+                                    class="input {{ hasErrorFor('password') ? 'is-danger' : '' }}"
+                                    value="{{ old('password', '') }}">
+                            </div>
+                            {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('password'), hasErrorFor('password')) }}
+                        </div>
+                
+                <div class="control">
+                    <button type="submit" class=" button is-dark is-fullwidth is-uppercase">register</button>
+                </div>
+        </form>
+      </div>
+  </div>
+@endsection

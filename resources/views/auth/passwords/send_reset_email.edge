@@ -1,0 +1,35 @@
+@layout('layouts.main')
+
+@section('content')
+  <div class="columns">
+      <div class="column is-4 is-offset-4">
+          <div class="title has-text-centered">Reset Password</div>
+
+          @include('includes.notification')
+
+          <form action= "/password/send-reset-email" method="post">
+            {{ csrfField() }}
+
+                    <div class="field">
+
+                        <label for="email">Email</label>
+                        <div class="control">
+                                <input 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                class="input"
+                                class="input {{ hasErrorFor('email') ? 'is-danger' : '' }}"
+                                value="{{ old('email', '') }}"
+                                >
+                        </div>
+                        
+                    </div>
+                
+                <div class="control">
+                    <button type="submit" class=" button is-dark is-fullwidth is-capitalized">Send Password Reset Link</button>
+                </div>
+        </form>
+      </div>
+  </div>
+@endsection
