@@ -32,7 +32,9 @@ class PasswordResetController {
             //get user
             const user = await User.findBy('email', request.input('email'))
 
-            await PasswordReset.query().where('email', user.email).delete()
+            await PasswordReset.query()
+                .where('email', user.email)
+                .delete()
 
             const { token } = await PasswordReset.create({
                 email: user.email,
@@ -44,8 +46,11 @@ class PasswordResetController {
                 token
             }
 
-            await Mail.send('auth.emails.password_reset', mailData, message =>{
-                message.to(user.email).from('admin@email.com').subject('Password Reset Link')
+            await Mail.send('auth.emails.password_reset', mailData, message => {
+                    message
+                        .to(user.email)
+                        .from('admin@email.com')
+                        .subject('Password Reset Link')
             })
 
             session.flash({
@@ -66,6 +71,8 @@ class PasswordResetController {
                     message: 'Sorry, we cannot send email to that address.'
                 }
             })
+
+            return response.redirect('back')
 
         }
 
@@ -97,10 +104,10 @@ class PasswordResetController {
 
             //get user by the provided email
 
-            const user = await User.findBy({'email': request.input('email')})
+            const user = await User.findBy('email', request.input('email'))
 
             //check if password reset token exists for the user
-            const token = PasswordReset.query()
+            const token = await PasswordReset.query()
                 .where('email', user.email)
                 .where('token', request.input('token'))
                 .first()
@@ -118,12 +125,13 @@ class PasswordResetController {
                 return response.redirect('back')
             }
 
-            //Hash the password
-            user.password = await Hash.make(request.input('password'))
+            //N.B. Hashing is not required since this is done in the model itself
+            //Assign the new password to the user
+            user.password = request.input('password')
             //Save the user to the database
             await user.save()
 
-            //delete password token from the database
+            //delete password reset token from the database
 
             await PasswordReset.query()
                 .where('email', user.email)
@@ -134,7 +142,7 @@ class PasswordResetController {
             session.flash({
                 notification: {
                     type: 'success',
-                    message: 'Your password has been reset.'
+                    message: 'Your password has been reset. Please login'
                 }
             })
 

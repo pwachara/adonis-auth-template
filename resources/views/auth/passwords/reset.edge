@@ -25,6 +25,8 @@
                       value="{{ old('email', '') }}"
                       >
               </div>
+
+              {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
               
             </div>
 
@@ -41,6 +43,8 @@
                             value="{{ old('password', '') }}"
                             >
                     </div>
+
+                    {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('password'), hasErrorFor('password')) }}
                     
                 </div>
 
@@ -57,6 +61,8 @@
                             value="{{ old('password_confirmation', '') }}"
                             >
                     </div>
+
+                    {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('password_confirmation'), hasErrorFor('password_confirmation')) }}
                     
                 </div>
                 

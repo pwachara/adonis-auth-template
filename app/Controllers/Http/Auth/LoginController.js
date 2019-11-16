@@ -1,5 +1,6 @@
 'use strict'
 
+const { validate, validateAll } = use('Validator')
 const User = use('App/Models/User')
 const Hash = use('Hash')
 
@@ -14,6 +15,24 @@ class LoginController {
 
         //GET FORM DATA
         const { email, password } = request.all()
+
+        //VALIDATE FORM DATA
+
+        const validation = await validateAll(request.all(), {
+            email: 'required:email',
+            password: 'required'
+        })
+
+        if(validation.fails()){
+
+            session.withErrors(validation.messages())
+            .flashExcept(['password'])
+
+            return response.redirect('back')
+        }
+
+
+
         
         //RETRIEVE USER
         const user = await User.query()
